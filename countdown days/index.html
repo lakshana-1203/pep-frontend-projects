@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stylish Countdown</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(45deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        #timer {
+            font-size: 2.5em;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Deadline Countdown</h2>
+        <div id="timer"></div>
+    </div>
+
+    <script>
+        let startDate = new Date("2026-03-29T12:00:00");
+        let endDate   = new Date("2026-03-31T15:30:45");
+
+        function updateCountdown() {
+            let now = new Date();
+            
+            if (now < startDate) {
+                document.getElementById("timer").textContent = "Wait for Start...";
+                return;
+            }
+
+            let diff = endDate.getTime() - now.getTime();
+
+            if (diff <= 0) {
+                document.getElementById("timer").textContent = "Time's up!";
+                clearInterval(timerInterval);
+                return;
+            }
+
+            let msInSec = 1000;
+            let msInMin = 60 * msInSec;
+            let msInHour = 60 * msInMin;
+            let msInDay = 24 * msInHour;
+
+            let days = 0;
+            while (diff >= msInDay) {
+                diff -= msInDay;
+                days++;
+            }
+
+            let hours = 0;
+            while (diff >= msInHour) {
+                diff -= msInHour;
+                hours++;
+            }
+
+            let minutes = 0;
+            while (diff >= msInMin) {
+                diff -= msInMin;
+                minutes++;
+            }
+
+            let seconds = 0;
+            while (diff >= msInSec) {
+                diff -= msInSec;
+                seconds++;
+            }
+
+            document.getElementById("timer").textContent = 
+                days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+        }
+
+        let timerInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+
+</body>
+</html>

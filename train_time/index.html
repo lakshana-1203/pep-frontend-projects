@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Solid Clock</title>
+    <style>
+      body {
+        /* Inga ungaluku pudicha color-a mathikonga */
+        background-color: #1a1a2e; 
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      #ClockDisplay {
+        color: #ffffff;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        font-size: 80px;
+        font-weight: bold;
+        letter-spacing: 5px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="ClockDisplay"></div>
+
+    <script>
+      function ShowTime() {
+        var date = new Date();
+        var h = date.getHours();
+        var m = date.getMinutes();
+        var s = date.getSeconds();
+        var session = "AM";
+
+        if (h == 0) h = 12;
+        if (h > 12) {
+          h = h - 12;
+          session = "PM";
+        }
+
+        h = h < 10 ? "0" + h : h;
+        m = m < 10 ? "0" + m : m;
+        s = s < 10 ? "0" + s : s;
+
+        var time = h + ":" + m + ":" + s + " " + session;
+        document.getElementById("ClockDisplay").innerText = time;
+        setTimeout(ShowTime, 1000);
+      }
+      ShowTime();
+    </script>
+  </body>
+</html>
